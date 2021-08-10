@@ -1,0 +1,16 @@
+-Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++
+-Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++\mingw32
+-Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++\backward
+-Ic:\MinGW\lib\gcc\mingw32\6.3.0\include
+-Ic:\MinGW\include
+-Ic:\MinGW\lib\gcc\mingw32\6.3.0\include-fixed
+-IC:\Users\Barbara\Desktop\IFG-Works\TCCei\CodeLiteTry\wxFrame_GUI\wxFrame_GUI\wxFrame_GUI
+-IC:\wxWidgets\lib\gcc_lib\mswu
+-IC:\wxWidgets\include
+-D_UNICODE
+-DHAVE_W32API_H
+-DNDEBUG
+-D__WXMSW__
+-std=c++11
+-target
+i686-pc-windows-gnu
