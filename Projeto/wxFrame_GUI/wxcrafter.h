@@ -20,6 +20,7 @@
 #include <wx/propgrid/property.h>
 #include <wx/propgrid/advprops.h>
 #include <wx/button.h>
+#include <wx/grid.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -46,12 +47,14 @@ protected:
     wxPGProperty* m_pgTipo;
     wxPGProperty* m_pgCorrente;
     wxPGProperty* m_pgTempo;
-    wxPGProperty* m_pgIATF;
+    wxPGProperty* m_pgITF;
+    wxPGProperty* m_pgRTC;
     wxPGProperty* m_pgIAIF;
-    wxPGProperty* m_pgF;
+    wxPGProperty* m_pgTempoDefinido;
     wxPGProperty* m_pgTipoCurva;
     wxButton* m_button35;
     wxButton* m_button51;
+    wxGrid* m_grid;
 
 protected:
     virtual void onPGChange(wxPropertyGridEvent& event)
@@ -63,6 +66,10 @@ protected:
         event.Skip();
     }
     virtual void btnClickCoordenograma(wxCommandEvent& event)
+    {
+        event.Skip();
+    }
+    virtual void grid_CellChanged(wxGridEvent& event)
     {
         event.Skip();
     }
@@ -79,6 +86,10 @@ public:
     wxButton* GetButton51()
     {
         return m_button51;
+    }
+    wxGrid* GetGrid()
+    {
+        return m_grid;
     }
     wxPanel* GetMainPanel()
     {

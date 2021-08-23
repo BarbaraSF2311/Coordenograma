@@ -4,7 +4,7 @@
 -Ic:\MinGW\lib\gcc\mingw32\6.3.0\include
 -Ic:\MinGW\include
 -Ic:\MinGW\lib\gcc\mingw32\6.3.0\include-fixed
--IC:\Users\Barbara\Desktop\IFG-Works\TCCei\CodeLiteTry\wxFrame_GUI_TestePlot\wxFrame_GUI
+-IC:\Users\Barbara\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI
 -IC:\wxWidgets\lib\gcc_lib\mswu
 -IC:\wxWidgets\include
 -D_UNICODE

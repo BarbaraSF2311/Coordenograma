@@ -36,9 +36,13 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     wxBoxSizer* boxSizer11 = new wxBoxSizer(wxHORIZONTAL);
     m_mainPanel->SetSizer(boxSizer11);
 
-    wxBoxSizer* boxSizer15 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* boxSizer15 = new wxBoxSizer(wxVERTICAL);
 
-    boxSizer11->Add(boxSizer15, 1, wxALL | wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+    boxSizer11->Add(boxSizer15, 1, wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* boxSizer125 = new wxBoxSizer(wxVERTICAL);
+
+    boxSizer15->Add(boxSizer125, 1, wxEXPAND, WXC_FROM_DIP(5));
 
     wxArrayString m_pgDadosArr;
     wxUnusedVar(m_pgDadosArr);
@@ -47,7 +51,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgDados = new wxPropertyGridManager(m_mainPanel, wxID_ANY, wxDefaultPosition,
         wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), wxPG_DESCRIPTION | wxPG_SPLITTER_AUTO_CENTER | wxPG_BOLD_MODIFIED);
 
-    boxSizer15->Add(m_pgDados, 1, wxALL | wxEXPAND, WXC_FROM_DIP(5));
+    boxSizer125->Add(m_pgDados, 1, wxEXPAND, WXC_FROM_DIP(5));
 
     m_pgDadosArr.Clear();
     m_pgDadosIntArr.Clear();
@@ -69,14 +73,17 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgTempo = m_pgDados->Append(new wxFloatProperty(_("Tempo"), wxPG_LABEL, 0));
     m_pgTempo->SetHelpString(wxT(""));
 
-    m_pgIATF = m_pgDados->Append(new wxFloatProperty(_("Iatf"), wxPG_LABEL, 0));
-    m_pgIATF->SetHelpString(wxT(""));
+    m_pgITF = m_pgDados->Append(new wxFloatProperty(_("Itf"), wxPG_LABEL, 0));
+    m_pgITF->SetHelpString(wxT(""));
+
+    m_pgRTC = m_pgDados->Append(new wxFloatProperty(_("RTC"), wxPG_LABEL, 0));
+    m_pgRTC->SetHelpString(wxT(""));
 
     m_pgIAIF = m_pgDados->Append(new wxFloatProperty(_("Iaif"), wxPG_LABEL, 0));
     m_pgIAIF->SetHelpString(wxT(""));
 
-    m_pgF = m_pgDados->Append(new wxFloatProperty(_("F"), wxPG_LABEL, 0));
-    m_pgF->SetHelpString(wxT(""));
+    m_pgTempoDefinido = m_pgDados->Append(new wxFloatProperty(_("Tempo Definido"), wxPG_LABEL, 0));
+    m_pgTempoDefinido->SetHelpString(wxT(""));
 
     m_pgDadosArr.Clear();
     m_pgDadosIntArr.Clear();
@@ -93,27 +100,35 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgTipoCurva->SetHelpString(_("Tipo de curva do Relé 51."));
     m_pgTipoCurva->SetEditor(wxT("Choice"));
 
-    wxBoxSizer* boxSizer13 = new wxBoxSizer(wxHORIZONTAL);
+    wxBoxSizer* boxSizer127 = new wxBoxSizer(wxHORIZONTAL);
 
-    boxSizer11->Add(boxSizer13, 0, wxALL | wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
-
-    wxBoxSizer* boxSizer63 = new wxBoxSizer(wxVERTICAL);
-
-    boxSizer13->Add(boxSizer63, 1, wxALL | wxALIGN_CENTER_VERTICAL, WXC_FROM_DIP(5));
-
-    wxBoxSizer* boxSizer83 = new wxBoxSizer(wxVERTICAL);
-
-    boxSizer63->Add(boxSizer83, 0, wxLEFT | wxRIGHT | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+    boxSizer15->Add(boxSizer127, 0, wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
 
     m_button35 = new wxButton(
         m_mainPanel, wxID_ANY, _("Adicionar"), wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), 0);
 
-    boxSizer83->Add(m_button35, 0, wxLEFT | wxRIGHT | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+    boxSizer127->Add(m_button35, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
 
     m_button51 = new wxButton(
         m_mainPanel, wxID_ANY, _("Coordenograma"), wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), 0);
 
-    boxSizer83->Add(m_button51, 0, wxLEFT | wxRIGHT | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+    boxSizer127->Add(m_button51, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+
+    wxBoxSizer* boxSizer13 = new wxBoxSizer(wxHORIZONTAL);
+
+    boxSizer11->Add(boxSizer13, 1, wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+
+    m_grid = new wxGrid(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)),
+        wxWANTS_CHARS | wxALWAYS_SHOW_SB);
+    m_grid->CreateGrid(0, 0);
+    m_grid->SetRowLabelAlignment(wxALIGN_RIGHT, wxALIGN_CENTRE);
+    m_grid->SetColLabelAlignment(wxALIGN_CENTRE, wxALIGN_CENTRE);
+#if wxVERSION_NUMBER >= 2904
+    m_grid->UseNativeColHeader(true);
+#endif
+    m_grid->EnableEditing(true);
+
+    boxSizer13->Add(m_grid, 1, wxLEFT | wxEXPAND, WXC_FROM_DIP(5));
 
     SetName(wxT("MainFrameBaseClass"));
     SetSize(wxDLG_UNIT(this, wxSize(500, 300)));
@@ -138,6 +153,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickAdicionar), NULL, this);
     m_button51->Connect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickCoordenograma), NULL, this);
+    m_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(MainFrameBaseClass::grid_CellChanged), NULL, this);
 }
 
 MainFrameBaseClass::~MainFrameBaseClass()
@@ -147,4 +163,5 @@ MainFrameBaseClass::~MainFrameBaseClass()
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickAdicionar), NULL, this);
     m_button51->Disconnect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickCoordenograma), NULL, this);
+    m_grid->Disconnect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(MainFrameBaseClass::grid_CellChanged), NULL, this);
 }
