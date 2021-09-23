@@ -32,6 +32,60 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 SCARD_S_SUCCESS	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_S_SUCCESS NO_ERROR$/;"	macro	line:7
 FACILITY_SYSTEM	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define FACILITY_SYSTEM 0x0$/;"	macro	line:9
 FACILITY_SCARD	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define FACILITY_SCARD 0x10$/;"	macro	line:10
@@ -100,56 +154,6 @@ SCARD_W_CANCELLED_BY_USER	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^
 SCARD_W_CARD_NOT_AUTHENTICATED	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CARD_NOT_AUTHENTICATED ((DWORD)0x8010006F)$/;"	macro	line:75
 SCARD_W_CACHE_ITEM_NOT_FOUND	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CACHE_ITEM_NOT_FOUND ((DWORD)0x80100070)$/;"	macro	line:77
 SCARD_W_CACHE_ITEM_STALE	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CACHE_ITEM_STALE ((DWORD)0x80100071)$/;"	macro	line:78
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

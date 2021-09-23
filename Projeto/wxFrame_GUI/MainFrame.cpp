@@ -258,15 +258,87 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
         }
         else if(item.m_Tipo==2){//Rele 50/51 TD
             texto += wxString::Format("Rele 50/51TD\nID = %d, TMS = %.2f, RTC = %.2f\n",item.m_ID,item.m_TMS,item.m_RTC);
+            switch (item.m_TipoCurva) {
+                case 1:{
+                    std::vector<double> curvaNormInv;
+                    CorrenteAux = item.m_Corrente;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(CorrenteAux);
+                        curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));
+                        CorrenteAux += 1;
+                    }
+                    plotData.AddData(curvaNormInv, wxT("Curva Normalmente Inversa"));
+                break;}
+                case 2:{
+                    std::vector<double> curvaMuitoInv;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaMuitoInv.emplace_back(13.5*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaMuitoInv, wxT("Curva Muito Inversa"));
+                break;}
+                case 3:{
+                    std::vector<double> curvaExtInv;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaExtInv.emplace_back(80*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)-1));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaExtInv, wxT("Curva Extremamente Inversa"));
+                break;}
+                case 4:{
+                    std::vector<double> curvaInvLonga;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaInvLonga.emplace_back(120*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaInvLonga, wxT("Curva Inversa Longa - Tempo definido"));
+                break;}
+                case 5:{
+                    std::vector<double> curvaInvCurta;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),0.04)-1));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaInvCurta, wxT("Curva Inversa Curta"));
+                break;}
+                case 6:{
+                    std::vector<double> curvaTermIT;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaTermIT.emplace_back(60*item.m_TMS/(item.m_Corrente/(item.m_Itf*item.m_RTC)));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaTermIT, wxT("Curva Térmica IxT"));
+                break;}
+                case 7:{
+                    std::vector<double> curvaTermI2T;
+                    for(int i = 0; i < 1800; ++i) {
+                        item.m_tempo51.emplace_back(item.m_Corrente);
+                        curvaTermI2T.emplace_back(540*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)));
+                        item.m_Corrente += 1;
+                    }
+                    plotData.AddData(curvaTermI2T, wxT("Curva Térmica I2xT"));
+                }
+            }
         }
         else if(item.m_Tipo==3){//ANSI
             texto += wxString::Format("ANSI\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
         }
         else if(item.m_Tipo==4){//INRUSH
-            texto += wxString::Format("ANSI\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
+            texto += wxString::Format("INRUSH\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
         }
         else if(item.m_Tipo==5){//CARGA
-            texto += wxString::Format("ANSI\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
+            texto += wxString::Format("CARGA\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
+            std::vector<double> correnteCarga;
+            //for(int i = 0; i < 1800; ++i) {
+            //    correnteCarga.emplace_back(item.m_Corrente);
+            //}
+            correnteCarga.emplace_back(item.m_Corrente);
+            plotData.AddData(correnteCarga, wxT("Corrente de carga"));
         }
         else if(item.m_Tipo==6){//ICC
             texto += wxString::Format("ICC\nID = %d, Corrente = %.2f\n",item.m_ID,item.m_Corrente);
