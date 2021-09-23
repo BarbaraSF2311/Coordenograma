@@ -22,7 +22,7 @@ struct Item{
     double m_TMS = 0;
     double m_Iaif = 0;
     double m_TempoDefinido = 0;  
-    int m_TipoCurva = 0; //1=inversa;2=MI;3=EI;4=InvLonga;5=InvCurta;6=Térmica1;7=Térm.2;
+    int m_TipoCurva = 0; //1=inversa;2=MI;3=EI;4=InvLonga;5=InvCurta;6=TÃ©rmica1;7=TÃ©rm.2;
     std::vector<double> m_tempo51;
     
     
@@ -36,6 +36,7 @@ public:
     virtual ~MainFrame();
 
 protected:
+    virtual void grid_CellSelected(wxGridEvent& event);
     virtual void grid_CellChanged(wxGridEvent& event);
     virtual void btnClickAdicionar(wxCommandEvent& event);
     virtual void onPGChange(wxPropertyGridEvent& event);

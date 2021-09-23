@@ -175,12 +175,14 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     plotData.SetName(wxT("Teste att"));
     plotData.SetCurveType(ElementPlotData::CurveType::CT_TEST);
 
-    double Imtempo = 200;
+    double Imtempo = 200;               //Onde comeÃ§a o plot
 
-    for(int i = 0; i < 1800; ++i) {
+    for(int i = 0; i < 1800; ++i) {    //Quanto mais vai plotar
         tempo.emplace_back(Imtempo);
         Imtempo += 1;
     }
+    
+    double CorrenteAux;                   //Auxiliar no plot para nÃ£o mexer no valor inicial escolhido
     
     wxString texto = "";
     for(auto item : m_Lista){
@@ -189,10 +191,11 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
             switch (item.m_TipoCurva) {
                 case 1:{
                     std::vector<double> curvaNormInv;
+                    CorrenteAux = item.m_Corrente;
                     for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),0.02)-1));
-                        item.m_Corrente += 1;
+                        item.m_tempo51.emplace_back(CorrenteAux);
+                        curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaNormInv, wxT("Curva Normalmente Inversa"));
                 break;}
@@ -239,7 +242,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                         curvaTermIT.emplace_back(60*item.m_TMS/(item.m_Corrente/(item.m_Itf*item.m_RTC)));
                         item.m_Corrente += 1;
                     }
-                    plotData.AddData(curvaTermIT, wxT("Curva Térmica IxT"));
+                    plotData.AddData(curvaTermIT, wxT("Curva TÃ©rmica IxT"));
                 break;}
                 case 7:{
                     std::vector<double> curvaTermI2T;
@@ -248,7 +251,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                         curvaTermI2T.emplace_back(540*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)));
                         item.m_Corrente += 1;
                     }
-                    plotData.AddData(curvaTermI2T, wxT("Curva Térmica I2xT"));
+                    plotData.AddData(curvaTermI2T, wxT("Curva TÃ©rmica I2xT"));
                 }
             }
 
@@ -295,7 +298,7 @@ void MainFrame::onPGChange(wxPropertyGridEvent& event)
     ChangePropertyText(m_pgTipoCurva,wxT("-"));
     
     switch(m_pgTipo->GetValue().GetInteger()){
-        case 1:{ //Relé 50/51
+        case 1:{ //RelÃ© 50/51
             ChangePropertyText(m_pgCorrente,wxT("Corrente"));
             ChangePropertyText(m_pgTempo,wxT("TMS"));
             ChangePropertyText(m_pgITF,wxT("Itf"));
@@ -310,7 +313,7 @@ void MainFrame::onPGChange(wxPropertyGridEvent& event)
             m_pgTipoCurva->Enable(true);
             break;
         }
-        case 2:{ //Relé 50/51 TD
+        case 2:{ //RelÃ© 50/51 TD
             ChangePropertyText(m_pgCorrente,wxT("Corrente"));
             ChangePropertyText(m_pgTempo,wxT("TMS"));
             ChangePropertyText(m_pgRTC,wxT("RTC"));
@@ -368,6 +371,20 @@ void MainFrame::grid_CellChanged(wxGridEvent& event)
 {
     //int row;
     //row = m_grid->GetSelectedRows()[0];
-    //wxMessageBox(wxT("A linha selecionada é %d", row))
-    //printf("A linha selecionada é %d", row);
+    //wxMessageBox(wxT("A linha selecionada Ã© %d", row))
+    //printf("A linha selecionada Ã© %d", row);Ã§
+    
+    long int id = -1;
+    m_grid->GetCellValue(event.GetRow(), 0).ToLong(&id);
+    //FillPG(id);
+    printf("O id selecionado foi: %d", id);
+    
+    event.Skip();
+}
+void MainFrame::grid_CellSelected(wxGridEvent& event)
+{
+    long int id = -1;
+    m_grid->GetCellValue(event.GetRow(), 0).ToLong(&id);
+    //FillPG(id);
+    printf("O id selecionado foi: %d", id);
 }

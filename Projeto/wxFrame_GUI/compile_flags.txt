@@ -1,10 +1,11 @@
--Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++
--Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++\mingw32
--Ic:\MinGW\lib\gcc\mingw32\6.3.0\include\c++\backward
--Ic:\MinGW\lib\gcc\mingw32\6.3.0\include
--Ic:\MinGW\include
--Ic:\MinGW\lib\gcc\mingw32\6.3.0\include-fixed
--IC:\Users\Barbara\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI
+-IC:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\10.3.0\include\c++
+-IC:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\10.3.0\include\c++\x86_64-w64-mingw32
+-IC:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\10.3.0\include\c++\backward
+-IC:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\10.3.0\include
+-IC:\TDM-GCC-64\include
+-IC:\TDM-GCC-64\lib\gcc\x86_64-w64-mingw32\10.3.0\include-fixed
+-IC:\TDM-GCC-64\x86_64-w64-mingw32\include
+-IC:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI
 -IC:\wxWidgets\lib\gcc_lib\mswu
 -IC:\wxWidgets\include
 -D_UNICODE
@@ -13,4 +14,4 @@
 -D__WXMSW__
 -std=c++11
 -target
-i686-pc-windows-gnu
+x86_64-pc-windows-gnu
