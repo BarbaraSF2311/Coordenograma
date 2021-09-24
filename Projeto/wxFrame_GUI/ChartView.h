@@ -45,6 +45,7 @@ class ChartView : public ChartViewBase
 
     void Fit();
     void UpdatePlot(bool fit = true);
+    void LockFit(double up, double right, double bottom, double left);
 
    protected:
     virtual void OnMenuExpCSVClick(wxCommandEvent& event);
@@ -90,5 +91,8 @@ class ChartView : public ChartViewBase
 
     std::vector<wxColour> m_colourList;
     std::vector<wxColour>::iterator m_itColourList;
+    
+    bool m_lockFit = false;
+    double m_bBox[4] = {0, 0, 0, 0};
 };
 #endif  // CHARTVIEW_H

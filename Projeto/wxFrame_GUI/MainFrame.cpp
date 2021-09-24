@@ -348,8 +348,9 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     plotDataList.push_back(plotData);
     
     ChartView* cView = new ChartView(nullptr, plotDataList, tempo);
-    cView->Show();
     
+    cView->Show();
+    cView->LockFit(100, 1800, 0, 200); // Alterar para os valores na ordem: Máximo Tempo (x), Máxima corrente (y), Mínimo tempo (x), Mínima corrente (y)
         
     }
 void MainFrame::onPGChange(wxPropertyGridEvent& event)

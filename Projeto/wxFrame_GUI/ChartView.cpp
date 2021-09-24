@@ -283,9 +283,21 @@ void ChartView::OnMenuShowLabelClick(wxCommandEvent& event)
 
 void ChartView::Fit()
 {
-    m_mpWindow->Fit();
     double bBox[4];
-    m_mpWindow->GetBoundingBox(bBox);
+    
+    if(m_lockFit)
+    {
+        m_mpWindow->Fit(m_bBox[0], m_bBox[1], m_bBox[2], m_bBox[3]);
+        bBox[0] = m_bBox[0];
+        bBox[1] = m_bBox[1];
+        bBox[2] = m_bBox[2];
+        bBox[3] = m_bBox[3];
+        
+    }
+    else {
+        m_mpWindow->Fit();
+        m_mpWindow->GetBoundingBox(bBox);
+    }
 
     m_pgPropXMin->SetValue(bBox[0]);
     m_pgPropXMax->SetValue(bBox[1]);
@@ -570,4 +582,15 @@ wxTreeItemId ChartView::GetActivePlotData(wxTreeItemId root, std::vector<PlotDat
 
     wxTreeItemId dummyID;
     return dummyID;
+}
+
+void ChartView::LockFit(double up, double right, double bottom, double left)
+{
+    m_bBox[0] = up;
+    m_bBox[1] = right;
+    m_bBox[2] = bottom;
+    m_bBox[3] = left;
+    m_lockFit = true;
+    Fit();
+    //m_mpWindow->UpdateAll();
 }
