@@ -174,15 +174,29 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     ElementPlotData plotData;
     plotData.SetName(wxT("Teste att"));
     plotData.SetCurveType(ElementPlotData::CurveType::CT_TEST);
+    
+    double CorrenteInicioPlot = std::numeric_limits<double>::max();//Maior numero double
+    double CorrenteFimPlot = 0;
+    
+    for(auto item : m_Lista){                                 //Define o começo do plot a partir das correntes que vai usar
+        if(item.m_Tipo == 1 || item.m_Tipo == 2){
+           if(item.m_Itf*item.m_RTC <= (CorrenteInicioPlot + 100)){CorrenteInicioPlot = item.m_Itf*item.m_RTC - 100;}
+           if(item.m_Itf*item.m_RTC >= (CorrenteFimPlot/12)){CorrenteFimPlot = item.m_Itf*item.m_RTC*12;} //12 escolhido p/ garantir caso só tenha rele
+        }
+        else{
+            if(item.m_Corrente <= (CorrenteInicioPlot + 100)){CorrenteInicioPlot = item.m_Corrente - 100;}
+            if(item.m_Corrente >= (CorrenteFimPlot - 100)){CorrenteFimPlot = item.m_Corrente + 100;}
+        }
+    }
 
-    double Imtempo = 200;               //Onde comeÃ§a o plot
+    double Imtempo = CorrenteInicioPlot;   //Onde comeca o plot
 
-    for(int i = 0; i < 1800; ++i) {    //Quanto mais vai plotar
+    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {    //Quanto mais vai plotar
         tempo.emplace_back(Imtempo);
         Imtempo += 1;
     }
     
-    double CorrenteAux;                   //Auxiliar no plot para nÃ£o mexer no valor inicial escolhido
+    double CorrenteAux;                   //Auxiliar no plot para nao mexer no valor inicial escolhido
     
     wxString texto = "";
     for(auto item : m_Lista){
@@ -191,135 +205,146 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
             switch (item.m_TipoCurva) {
                 case 1:{
                     std::vector<double> curvaNormInv;
-                    CorrenteAux = item.m_Corrente;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(CorrenteAux);
-                        curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));}
+                        else{curvaNormInv.emplace_back(-10);} // Fazendo a ativação instantanea
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaNormInv, wxT("Curva Normalmente Inversa"));
                 break;}
                 case 2:{
                     std::vector<double> curvaMuitoInv;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaMuitoInv.emplace_back(13.5*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        else{curvaMuitoInv.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaMuitoInv, wxT("Curva Muito Inversa"));
                 break;}
                 case 3:{
                     std::vector<double> curvaExtInv;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaExtInv.emplace_back(80*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1));}
+                        else{curvaExtInv.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaExtInv, wxT("Curva Extremamente Inversa"));
                 break;}
                 case 4:{
                     std::vector<double> curvaInvLonga;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaInvLonga.emplace_back(120*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        else{curvaInvLonga.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvLonga, wxT("Curva Inversa Longa - Tempo definido"));
                 break;}
                 case 5:{
                     std::vector<double> curvaInvCurta;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),0.04)-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1));}
+                        else{curvaInvCurta.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvCurta, wxT("Curva Inversa Curta"));
                 break;}
                 case 6:{
                     std::vector<double> curvaTermIT;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaTermIT.emplace_back(60*item.m_TMS/(item.m_Corrente/(item.m_Itf*item.m_RTC)));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC)));}
+                        else{curvaTermIT.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermIT, wxT("Curva TÃ©rmica IxT"));
                 break;}
                 case 7:{
                     std::vector<double> curvaTermI2T;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaTermI2T.emplace_back(540*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)));}
+                        else{curvaTermI2T.emplace_back(-10);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermI2T, wxT("Curva TÃ©rmica I2xT"));
                 }
             }
-
         }
         else if(item.m_Tipo==2){//Rele 50/51 TD
             texto += wxString::Format("Rele 50/51TD\nID = %d, TMS = %.2f, RTC = %.2f\n",item.m_ID,item.m_TMS,item.m_RTC);
             switch (item.m_TipoCurva) {
                 case 1:{
                     std::vector<double> curvaNormInv;
-                    CorrenteAux = item.m_Corrente;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(CorrenteAux);
-                        curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));}
+                        else{curvaNormInv.emplace_back(item.m_TempoDefinido);}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaNormInv, wxT("Curva Normalmente Inversa"));
                 break;}
                 case 2:{
                     std::vector<double> curvaMuitoInv;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaMuitoInv.emplace_back(13.5*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        else{curvaMuitoInv.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaMuitoInv, wxT("Curva Muito Inversa"));
                 break;}
                 case 3:{
                     std::vector<double> curvaExtInv;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaExtInv.emplace_back(80*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1));}
+                        else{curvaExtInv.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaExtInv, wxT("Curva Extremamente Inversa"));
                 break;}
                 case 4:{
                     std::vector<double> curvaInvLonga;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaInvLonga.emplace_back(120*item.m_TMS/((item.m_Corrente/(item.m_Itf*item.m_RTC))-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        else{curvaInvLonga.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvLonga, wxT("Curva Inversa Longa - Tempo definido"));
                 break;}
                 case 5:{
                     std::vector<double> curvaInvCurta;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),0.04)-1));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1));}
+                        else{curvaInvCurta.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvCurta, wxT("Curva Inversa Curta"));
                 break;}
                 case 6:{
                     std::vector<double> curvaTermIT;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaTermIT.emplace_back(60*item.m_TMS/(item.m_Corrente/(item.m_Itf*item.m_RTC)));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC)));}
+                        else{curvaTermIT.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermIT, wxT("Curva Térmica IxT"));
                 break;}
                 case 7:{
                     std::vector<double> curvaTermI2T;
-                    for(int i = 0; i < 1800; ++i) {
-                        item.m_tempo51.emplace_back(item.m_Corrente);
-                        curvaTermI2T.emplace_back(540*item.m_TMS/(pow((item.m_Corrente/(item.m_Itf*item.m_RTC)),2)));
-                        item.m_Corrente += 1;
+                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)));}
+                        else{curvaTermI2T.emplace_back(item.m_TempoDefinido);}
+                        CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermI2T, wxT("Curva Térmica I2xT"));
                 }
@@ -334,14 +359,24 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
         else if(item.m_Tipo==5){//CARGA
             texto += wxString::Format("CARGA\nID = %d, Corrente = %.2f, Tempo = %.2f\n",item.m_ID,item.m_Corrente,item.m_Tempo);
             std::vector<double> correnteCarga;
-            //for(int i = 0; i < 1800; ++i) {
-            //    correnteCarga.emplace_back(item.m_Corrente);
-            //}
-            correnteCarga.emplace_back(item.m_Corrente);
+            CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+            for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                if(CorrenteAux <= item.m_Corrente){correnteCarga.emplace_back(-10);} //Assim não aparece no plot
+                else{correnteCarga.emplace_back(1000);}                              //Assim não aparece no plot
+                CorrenteAux += 1;
+            }
             plotData.AddData(correnteCarga, wxT("Corrente de carga"));
         }
         else if(item.m_Tipo==6){//ICC
             texto += wxString::Format("ICC\nID = %d, Corrente = %.2f\n",item.m_ID,item.m_Corrente);
+            std::vector<double> correnteICC;
+            CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+            for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
+                if(CorrenteAux <= item.m_Corrente){correnteICC.emplace_back(-10);} //Assim não aparece no plot
+                else{correnteICC.emplace_back(1000);}                              //Assim não aparece no plot
+                CorrenteAux += 1;
+            }
+            plotData.AddData(correnteICC, wxT("Corrente de Curto-circuito"));
         }
     }
     wxMessageBox(texto);
@@ -349,8 +384,11 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     
     ChartView* cView = new ChartView(nullptr, plotDataList, tempo);
     
+    
+    cView->LockFit(CorrenteInicioPlot, CorrenteFimPlot, 0, 100);
     cView->Show();
-    cView->LockFit(100, 1800, 0, 200); // Alterar para os valores na ordem: Máximo Tempo (x), Máxima corrente (y), Mínimo tempo (x), Mínima corrente (y)
+    //cView->LockFit(100, 1800, 0, 200); // Alterar para os valores na ordem: Máximo Tempo (x), Máxima corrente (y), Mínimo tempo (x), Mínima corrente (y)
+                                                                            //Minima corrente, maxima corrente, mínimo tempo, maximo tempo
         
     }
 void MainFrame::onPGChange(wxPropertyGridEvent& event)
@@ -372,13 +410,13 @@ void MainFrame::onPGChange(wxPropertyGridEvent& event)
     
     switch(m_pgTipo->GetValue().GetInteger()){
         case 1:{ //RelÃ© 50/51
-            ChangePropertyText(m_pgCorrente,wxT("Corrente"));
+            //ChangePropertyText(m_pgCorrente,wxT("Corrente"));
             ChangePropertyText(m_pgTempo,wxT("TMS"));
             ChangePropertyText(m_pgITF,wxT("Itf"));
             ChangePropertyText(m_pgIAIF,wxT("Iaif"));
             ChangePropertyText(m_pgRTC,wxT("RTC"));
             ChangePropertyText(m_pgTipoCurva,wxT("Tipo de Curva"));
-            m_pgCorrente->Enable(true);
+            //m_pgCorrente->Enable(true);
             m_pgTempo->Enable(true);
             m_pgITF->Enable(true);
             m_pgIAIF->Enable(true);
@@ -387,14 +425,14 @@ void MainFrame::onPGChange(wxPropertyGridEvent& event)
             break;
         }
         case 2:{ //RelÃ© 50/51 TD
-            ChangePropertyText(m_pgCorrente,wxT("Corrente"));
+            //ChangePropertyText(m_pgCorrente,wxT("Corrente"));
             ChangePropertyText(m_pgTempo,wxT("TMS"));
             ChangePropertyText(m_pgRTC,wxT("RTC"));
             ChangePropertyText(m_pgTempoDefinido,wxT("Tempo Definido"));
             ChangePropertyText(m_pgITF,wxT("Itf"));
             ChangePropertyText(m_pgIAIF,wxT("Iaif"));
             ChangePropertyText(m_pgTipoCurva,wxT("Tipo de Curva"));
-            m_pgCorrente->Enable(true);
+            //m_pgCorrente->Enable(true);
             m_pgTempo->Enable(true);
             m_pgITF->Enable(true);
             m_pgIAIF->Enable(true);
