@@ -163,6 +163,13 @@ void MainFrame::btnClickAdicionar(wxCommandEvent& event)
     m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 0, wxString::Format("%d", novoItem.m_ID));
     m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 1, m_pgTipo->GetDisplayedString());
     
+    m_pgCorrente->SetValue(0);              //Zerar os valores
+    m_pgTempo->SetValue(0);
+    m_pgITF->SetValue(0);
+    m_pgRTC->SetValue(0);
+    m_pgIAIF->SetValue(0);
+    m_pgTempoDefinido->SetValue(0);
+    
     
 }
 
@@ -181,7 +188,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     for(auto item : m_Lista){                                 //Define o começo do plot a partir das correntes que vai usar
         if(item.m_Tipo == 1 || item.m_Tipo == 2){
            if(item.m_Itf*item.m_RTC <= (CorrenteInicioPlot + 100)){CorrenteInicioPlot = item.m_Itf*item.m_RTC - 100;}
-           if(item.m_Itf*item.m_RTC >= (CorrenteFimPlot/12)){CorrenteFimPlot = item.m_Itf*item.m_RTC*12;} //12 escolhido p/ garantir caso só tenha rele
+           if(item.m_Itf*item.m_RTC >= (CorrenteFimPlot/120)){CorrenteFimPlot = item.m_Itf*item.m_RTC*120;} 
         }
         else{
             if(item.m_Corrente <= (CorrenteInicioPlot + 100)){CorrenteInicioPlot = item.m_Corrente - 100;}
@@ -191,23 +198,23 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
 
     double Imtempo = CorrenteInicioPlot;   //Onde comeca o plot
 
-    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {    //Quanto mais vai plotar
-        tempo.emplace_back(Imtempo);
+    for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {    //Vetor do tempo
+        tempo.emplace_back(log10(Imtempo));                             
         Imtempo += 1;
     }
-    
+
     double CorrenteAux;                   //Auxiliar no plot para nao mexer no valor inicial escolhido
     
     wxString texto = "";
     for(auto item : m_Lista){
         if(item.m_Tipo==1){ //Rele 50/51
-            texto += wxString::Format("Rele 50/51\nID = %d, TMS = %.2f, Corrente = %.2f\n",item.m_ID,item.m_TMS,item.m_Corrente);
+            texto += wxString::Format("Rele 50/51\nID = %d, TMS = %.2f, Aux = %d\n",item.m_ID,item.m_TMS,aux);
             switch (item.m_TipoCurva) {
                 case 1:{
                     std::vector<double> curvaNormInv;
-                    CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
+                    CorrenteAux = CorrenteInicioPlot;    //----------------------------------------------------------------- 
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));}
+                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(log10(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1)));}
                         else{curvaNormInv.emplace_back(-10);} // Fazendo a ativação instantanea
                         CorrenteAux += 1;
                     }
@@ -217,7 +224,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaMuitoInv;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(log10(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1)));}
                         else{curvaMuitoInv.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -227,7 +234,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaExtInv;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1));}
+                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(log10(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1)));}
                         else{curvaExtInv.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -237,7 +244,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaInvLonga;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
+                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(log10(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1)));}
                         else{curvaInvLonga.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -247,7 +254,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaInvCurta;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1));}
+                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(log10(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1)));}
                         else{curvaInvCurta.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -257,7 +264,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaTermIT;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC)));}
+                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(log10(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC))));}
                         else{curvaTermIT.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -267,7 +274,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaTermI2T;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)));}
+                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(log10(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2))));}
                         else{curvaTermI2T.emplace_back(-10);}
                         CorrenteAux += 1;
                     }
@@ -282,8 +289,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaNormInv;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1));}
-                        else{curvaNormInv.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaNormInv.emplace_back(log10(0.14*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.02)-1)));}
+                        else{curvaNormInv.emplace_back(log10(item.m_TempoDefinido));} // LOG10 PRA DAR CERTO NO PLOT
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaNormInv, wxT("Curva Normalmente Inversa"));
@@ -292,8 +299,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaMuitoInv;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
-                        else{curvaMuitoInv.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaMuitoInv.emplace_back(log10(13.5*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1)));}
+                        else{curvaMuitoInv.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaMuitoInv, wxT("Curva Muito Inversa"));
@@ -302,8 +309,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaExtInv;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1));}
-                        else{curvaExtInv.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaExtInv.emplace_back(log10(80*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)-1)));}
+                        else{curvaExtInv.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaExtInv, wxT("Curva Extremamente Inversa"));
@@ -312,8 +319,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaInvLonga;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1));}
-                        else{curvaInvLonga.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaInvLonga.emplace_back(log10(120*item.m_TMS/((CorrenteAux/(item.m_Itf*item.m_RTC))-1)));}
+                        else{curvaInvLonga.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvLonga, wxT("Curva Inversa Longa - Tempo definido"));
@@ -322,8 +329,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaInvCurta;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1));}
-                        else{curvaInvCurta.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaInvCurta.emplace_back(log10(0.05*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),0.04)-1)));}
+                        else{curvaInvCurta.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaInvCurta, wxT("Curva Inversa Curta"));
@@ -332,8 +339,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaTermIT;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC)));}
-                        else{curvaTermIT.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaTermIT.emplace_back(log10(60*item.m_TMS/(CorrenteAux/(item.m_Itf*item.m_RTC))));}
+                        else{curvaTermIT.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermIT, wxT("Curva Térmica IxT"));
@@ -342,8 +349,8 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
                     std::vector<double> curvaTermI2T;
                     CorrenteAux = CorrenteInicioPlot;    //-----------------------------------------------------------------
                     for(int i = CorrenteInicioPlot; i < CorrenteFimPlot; ++i) {
-                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2)));}
-                        else{curvaTermI2T.emplace_back(item.m_TempoDefinido);}
+                        if(CorrenteAux <= item.m_Iaif){curvaTermI2T.emplace_back(log10(540*item.m_TMS/(pow((CorrenteAux/(item.m_Itf*item.m_RTC)),2))));}
+                        else{curvaTermI2T.emplace_back(log10(item.m_TempoDefinido));}
                         CorrenteAux += 1;
                     }
                     plotData.AddData(curvaTermI2T, wxT("Curva Térmica I2xT"));
@@ -384,8 +391,7 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
     
     ChartView* cView = new ChartView(nullptr, plotDataList, tempo);
     
-    
-    cView->LockFit(CorrenteInicioPlot, CorrenteFimPlot, 0, 100);
+    cView->LockFit(log10(CorrenteInicioPlot), log10(CorrenteFimPlot), log10(0.01), log10(100)); //Deixei em log pra ter noção do pq dos valores escolhidos
     cView->Show();
     //cView->LockFit(100, 1800, 0, 200); // Alterar para os valores na ordem: Máximo Tempo (x), Máxima corrente (y), Mínimo tempo (x), Mínima corrente (y)
                                                                             //Minima corrente, maxima corrente, mínimo tempo, maximo tempo

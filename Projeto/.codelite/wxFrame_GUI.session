@@ -12,8 +12,8 @@
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\MainFrame.cpp" Name="FileName"/>
-      <int Value="174" Name="FirstVisibleLine"/>
-      <int Value="188" Name="CurrentLine"/>
+      <int Value="230" Name="FirstVisibleLine"/>
+      <int Value="242" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
