@@ -4,8 +4,8 @@
 // Do not modify this file by hand!
 //////////////////////////////////////////////////////////////////////
 
-#ifndef _WXFRAME_GUI_TESTEPLOT_WXFRAME_GUI_WXCRAFTER_BASE_CLASSES_H
-#define _WXFRAME_GUI_TESTEPLOT_WXFRAME_GUI_WXCRAFTER_BASE_CLASSES_H
+#ifndef _PROJETO_WXFRAME_GUI_WXCRAFTER_BASE_CLASSES_H
+#define _PROJETO_WXFRAME_GUI_WXCRAFTER_BASE_CLASSES_H
 
 // clang-format off
 #include <wx/settings.h>
@@ -44,6 +44,7 @@ class MainFrameBaseClass : public wxFrame
 protected:
     wxPanel* m_mainPanel;
     wxPropertyGridManager* m_pgDados;
+    wxPGProperty* m_pgNome;
     wxPGProperty* m_pgTipo;
     wxPGProperty* m_pgCorrente;
     wxPGProperty* m_pgTempo;
@@ -53,6 +54,7 @@ protected:
     wxPGProperty* m_pgTempoDefinido;
     wxPGProperty* m_pgTipoCurva;
     wxButton* m_button35;
+    wxButton* m_button131;
     wxButton* m_button51;
     wxGrid* m_grid;
 
@@ -65,11 +67,15 @@ protected:
     {
         event.Skip();
     }
+    virtual void btnClickExcluir(wxCommandEvent& event)
+    {
+        event.Skip();
+    }
     virtual void btnClickCoordenograma(wxCommandEvent& event)
     {
         event.Skip();
     }
-    virtual void grid_CellChanged(wxGridEvent& event)
+    virtual void grid_CellSelected(wxGridEvent& event)
     {
         event.Skip();
     }
@@ -82,6 +88,10 @@ public:
     wxButton* GetButton35()
     {
         return m_button35;
+    }
+    wxButton* GetButton131()
+    {
+        return m_button131;
     }
     wxButton* GetButton51()
     {
@@ -97,9 +107,9 @@ public:
     }
     MainFrameBaseClass(wxWindow* parent,
         wxWindowID id = wxID_ANY,
-        const wxString& title = _("My Frame"),
+        const wxString& title = _("Coordenograma"),
         const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxSize(500, 300),
+        const wxSize& size = wxSize(700, 400),
         long style = wxCAPTION | wxRESIZE_BORDER | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxSYSTEM_MENU | wxCLOSE_BOX);
     virtual ~MainFrameBaseClass();
 };

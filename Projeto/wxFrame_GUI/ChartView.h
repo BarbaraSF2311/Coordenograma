@@ -46,6 +46,8 @@ class ChartView : public ChartViewBase
     void Fit();
     void UpdatePlot(bool fit = true);
     void LockFit(double up, double right, double bottom, double left);
+	
+	std::vector<int> m_ListaTipo;
 
    protected:
     virtual void OnMenuExpCSVClick(wxCommandEvent& event);

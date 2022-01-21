@@ -8,11 +8,13 @@
 #include <wx/image.h>
 #include <wx/msgdlg.h>
 #include <complex.h>
+#include <cmath>
 
 struct Item{
     
     int m_ID = 0;
-    double m_Tipo = 0; //1=rele50/51;2=rele50/51TD;3=ANSI;4=inrush;5=carga;6=ICC;
+    wxString m_Nome = "";
+    int m_Tipo = 0; //1=rele50/51;2=rele50/51TD;3=ANSI;4=inrush;5=carga;6=ICC;
     double m_RTC = 0;
     double m_Tempo = 0;
     double m_Corrente = 0;
@@ -22,8 +24,9 @@ struct Item{
     double m_TMS = 0;
     double m_Iaif = 0;
     double m_TempoDefinido = 0;  
-    int m_TipoCurva = 0; //1=inversa;2=MI;3=EI;4=InvLonga;5=InvCurta;6=TÃ©rmica1;7=TÃ©rm.2;
-    std::vector<double> m_tempo51;
+    int m_TipoCurva = 0; //1=inversa;2=MI;3=EI;4=InvLonga;5=InvCurta;6=Termica1;7=Term.2;
+    //bool m_StatusEdit = false;
+    int m_StatusDelete = 0;
     
     
 };
@@ -36,8 +39,8 @@ public:
     virtual ~MainFrame();
 
 protected:
+    virtual void btnClickExcluir(wxCommandEvent& event);
     virtual void grid_CellSelected(wxGridEvent& event);
-    virtual void grid_CellChanged(wxGridEvent& event);
     virtual void btnClickAdicionar(wxCommandEvent& event);
     virtual void onPGChange(wxPropertyGridEvent& event);
     virtual void btnClickCoordenograma(wxCommandEvent& event);

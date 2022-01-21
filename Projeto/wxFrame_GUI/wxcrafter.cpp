@@ -38,7 +38,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
 
     wxBoxSizer* boxSizer15 = new wxBoxSizer(wxVERTICAL);
 
-    boxSizer11->Add(boxSizer15, 1, wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+    boxSizer11->Add(boxSizer15, 0, wxEXPAND | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
 
     wxBoxSizer* boxSizer125 = new wxBoxSizer(wxVERTICAL);
 
@@ -48,16 +48,20 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     wxUnusedVar(m_pgDadosArr);
     wxArrayInt m_pgDadosIntArr;
     wxUnusedVar(m_pgDadosIntArr);
-    m_pgDados = new wxPropertyGridManager(m_mainPanel, wxID_ANY, wxDefaultPosition,
-        wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), wxPG_DESCRIPTION | wxPG_SPLITTER_AUTO_CENTER | wxPG_BOLD_MODIFIED);
+    m_pgDados =
+        new wxPropertyGridManager(m_mainPanel, wxID_ANY, wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)),
+            wxPG_DESCRIPTION | wxPG_STATIC_LAYOUT | wxPG_SPLITTER_AUTO_CENTER | wxPG_BOLD_MODIFIED);
 
-    boxSizer125->Add(m_pgDados, 1, wxEXPAND, WXC_FROM_DIP(5));
+    boxSizer125->Add(m_pgDados, 1, wxLEFT | wxEXPAND, WXC_FROM_DIP(5));
+
+    m_pgNome = m_pgDados->Append(new wxStringProperty(_("Nome"), wxPG_LABEL, wxT("")));
+    m_pgNome->SetHelpString(wxT("Nome do item a ser incluido no coordenograma."));
 
     m_pgDadosArr.Clear();
     m_pgDadosIntArr.Clear();
     m_pgDadosArr.Add(_("Selecione o tipo"));
-    m_pgDadosArr.Add(_("Rele 50/51"));
-    m_pgDadosArr.Add(_("Rele 50/51 TD"));
+    m_pgDadosArr.Add(wxT("Relé 50/51"));
+    m_pgDadosArr.Add(wxT("Relé 50/51 TD"));
     m_pgDadosArr.Add(_("ANSI"));
     m_pgDadosArr.Add(_("INRUSH"));
     m_pgDadosArr.Add(_("Carga"));
@@ -66,24 +70,32 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgTipo->SetHelpString(_("Tipo de elemento a ser acrescentado no coordenograma."));
     m_pgTipo->SetEditor(wxT("Choice"));
 
-    m_pgCorrente = m_pgDados->Append(new wxFloatProperty(_("Corrente"), wxPG_LABEL, 0));
-    m_pgCorrente->SetHelpString(wxT(""));
+    m_pgCorrente = m_pgDados->Append(new wxFloatProperty(_("Corrente [kA]"), wxPG_LABEL, 0));
+    m_pgCorrente->SetHelpString(
+        wxT("Corrente máxima que o transformador suporta para o ponto ANSI;\nCorrente de magnetização do transformador "
+          "para o ponto INRUSH;\nCorrente nominal da carga;\nCorrente de curto-circuito."));
     m_pgCorrente->SetEditor(wxT("TextCtrl"));
 
-    m_pgTempo = m_pgDados->Append(new wxFloatProperty(_("Tempo"), wxPG_LABEL, 0));
-    m_pgTempo->SetHelpString(wxT(""));
+    m_pgTempo = m_pgDados->Append(new wxFloatProperty(_("Tempo [s]"), wxPG_LABEL, 0));
+    m_pgTempo->SetHelpString(
+        wxT("TMS - Ajuste do multiplicador de tempo do relé;\nTempo máximo que o transformador suporta para a corrente ANSI;"
+          "\nTempo de magnetização do transformador para o ponto INRUSH;\nTempo de partida da carga."));
 
-    m_pgITF = m_pgDados->Append(new wxFloatProperty(_("Itf"), wxPG_LABEL, 0));
-    m_pgITF->SetHelpString(wxT(""));
+    m_pgITF = m_pgDados->Append(new wxFloatProperty(_("Itf [A]/Corrente de partida [kA]"), wxPG_LABEL, 0));
+    m_pgITF->SetHelpString(
+        wxT("Itf - Corrente de tape da unidade temporizada de fase;\nCorrente de partida da carga."));
 
     m_pgRTC = m_pgDados->Append(new wxFloatProperty(_("RTC"), wxPG_LABEL, 0));
-    m_pgRTC->SetHelpString(wxT(""));
+    m_pgRTC->SetHelpString(
+        wxT("RTC - Relação de transformação do transformador de corrente."));
 
-    m_pgIAIF = m_pgDados->Append(new wxFloatProperty(_("Iaif"), wxPG_LABEL, 0));
-    m_pgIAIF->SetHelpString(wxT(""));
+    m_pgIAIF = m_pgDados->Append(new wxFloatProperty(_("Iaif [kA]"), wxPG_LABEL, 0));
+    m_pgIAIF->SetHelpString(
+        wxT("Iaif - Corrente de acionamento da unidade instantânea de fase."));
 
-    m_pgTempoDefinido = m_pgDados->Append(new wxFloatProperty(_("Tempo Definido"), wxPG_LABEL, 0));
-    m_pgTempoDefinido->SetHelpString(wxT(""));
+    m_pgTempoDefinido = m_pgDados->Append(new wxFloatProperty(_("Tempo Definido [s]"), wxPG_LABEL, 0));
+    m_pgTempoDefinido->SetHelpString(
+        wxT("Tempo programado para acionamento do relé."));
 
     m_pgDadosArr.Clear();
     m_pgDadosIntArr.Clear();
@@ -93,11 +105,11 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgDadosArr.Add(_("Curva Extremamente Inversa"));
     m_pgDadosArr.Add(_("Curva Inversa Longa"));
     m_pgDadosArr.Add(_("Curva Inversa Curta"));
-    m_pgDadosArr.Add(_("Curva Termica IXT"));
-    m_pgDadosArr.Add(_("Curva Termica I²XT"));
+    m_pgDadosArr.Add(wxT("Curva Térmica IXT"));
+    m_pgDadosArr.Add(wxT("Curva Térmica I²XT"));
     m_pgTipoCurva =
         m_pgDados->Append(new wxEnumProperty(_("Tipo de Curva"), wxPG_LABEL, m_pgDadosArr, m_pgDadosIntArr, 0));
-    m_pgTipoCurva->SetHelpString(_("Tipo de curva do Relé 51."));
+    m_pgTipoCurva->SetHelpString(wxT("Tipo de curva do Relé 51."));
     m_pgTipoCurva->SetEditor(wxT("Choice"));
 
     wxBoxSizer* boxSizer127 = new wxBoxSizer(wxHORIZONTAL);
@@ -108,6 +120,11 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
         m_mainPanel, wxID_ANY, _("Adicionar"), wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), 0);
 
     boxSizer127->Add(m_button35, 0, wxALL | wxALIGN_CENTER_HORIZONTAL, WXC_FROM_DIP(5));
+
+    m_button131 = new wxButton(
+        m_mainPanel, wxID_ANY, _("Excluir"), wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), 0);
+
+    boxSizer127->Add(m_button131, 0, wxALL, WXC_FROM_DIP(5));
 
     m_button51 = new wxButton(
         m_mainPanel, wxID_ANY, _("Coordenograma"), wxDefaultPosition, wxDLG_UNIT(m_mainPanel, wxSize(-1, -1)), 0);
@@ -126,12 +143,12 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
 #if wxVERSION_NUMBER >= 2904
     m_grid->UseNativeColHeader(true);
 #endif
-    m_grid->EnableEditing(true);
+    m_grid->EnableEditing(false);
 
     boxSizer13->Add(m_grid, 1, wxLEFT | wxEXPAND, WXC_FROM_DIP(5));
 
     SetName(wxT("MainFrameBaseClass"));
-    SetSize(wxDLG_UNIT(this, wxSize(500, 300)));
+    SetSize(wxDLG_UNIT(this, wxSize(700, 400)));
     if(GetSizer()) {
         GetSizer()->Fit(this);
     }
@@ -151,9 +168,11 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
     m_pgDados->Connect(wxEVT_PG_CHANGED, wxPropertyGridEventHandler(MainFrameBaseClass::onPGChange), NULL, this);
     m_button35->Connect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickAdicionar), NULL, this);
+    m_button131->Connect(
+        wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickExcluir), NULL, this);
     m_button51->Connect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickCoordenograma), NULL, this);
-    m_grid->Connect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(MainFrameBaseClass::grid_CellChanged), NULL, this);
+    m_grid->Connect(wxEVT_GRID_SELECT_CELL, wxGridEventHandler(MainFrameBaseClass::grid_CellSelected), NULL, this);
 }
 
 MainFrameBaseClass::~MainFrameBaseClass()
@@ -161,7 +180,9 @@ MainFrameBaseClass::~MainFrameBaseClass()
     m_pgDados->Disconnect(wxEVT_PG_CHANGED, wxPropertyGridEventHandler(MainFrameBaseClass::onPGChange), NULL, this);
     m_button35->Disconnect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickAdicionar), NULL, this);
+    m_button131->Disconnect(
+        wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickExcluir), NULL, this);
     m_button51->Disconnect(
         wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(MainFrameBaseClass::btnClickCoordenograma), NULL, this);
-    m_grid->Disconnect(wxEVT_GRID_CELL_CHANGED, wxGridEventHandler(MainFrameBaseClass::grid_CellChanged), NULL, this);
+    m_grid->Disconnect(wxEVT_GRID_SELECT_CELL, wxGridEventHandler(MainFrameBaseClass::grid_CellSelected), NULL, this);
 }

@@ -105,7 +105,7 @@ void ChartView::SetTreectrl()
 
     wxString rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::NUM_ELEMENTS)];
     // Adicionar novos tipos de curva aqui:
-    rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::CT_TEST)] = wxT("Teste");
+    rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::CT_TEST)] = wxT("Coordenograma");
 
     wxTreeItemId rootItemID[static_cast<unsigned int>(ElementPlotData::CurveType::NUM_ELEMENTS)];
 
@@ -249,7 +249,7 @@ void ChartView::OnMenuSendClipClick(wxCommandEvent& event)
         wxTheClipboard->SetData(new wxBitmapDataObject(screenshot));
         wxTheClipboard->Close();
 
-        wxMessageDialog msgDialog(this, wxT("Gráfico enciado para a área de transferência"), wxT("Informação"), wxOK | wxICON_INFORMATION,
+        wxMessageDialog msgDialog(this, wxT("Gráfico enviado para a área de transferência"), wxT("Informação"), wxOK | wxICON_INFORMATION,
                                   wxDefaultPosition);
         msgDialog.ShowModal();
     } else {
@@ -448,6 +448,8 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
     wxTreeItemIdValue cookie;
     wxTreeItemId item = m_treeCtrl->GetFirstChild(root, cookie);
     wxTreeItemId child;
+    
+    int aux = 0; //--------------------------------------------------------------------------------***************************
 
     while(item.IsOk()) {
         if(PlotData* data = dynamic_cast<PlotData*>(m_treeCtrl->GetItemData(item))) {
@@ -455,9 +457,28 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
                 wxString parentName = m_treeCtrl->GetItemText(m_treeCtrl->GetItemParent(item));
                 mpFXYVector* newLayer = new mpFXYVector(data->GetName() + " (" + parentName + ")");
                 newLayer->SetData(m_xAxisValues, data->GetValues());
-                newLayer->SetContinuity(true);
-                wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
-                newLayer->SetPen(layerPen);
+                if(m_ListaTipo[aux] == 3 || m_ListaTipo[aux] == 4) {                          // ANSI OU INRUSH
+                    newLayer->SetContinuity(false);
+                    wxPen layerPen(data->GetColour(), 10, data->GetPenType());
+                    newLayer->SetPen(layerPen);
+                }  
+                else if(m_ListaTipo[aux] == 5) {                                              // CARGA
+                    if(m_ListaTipo[aux - 1] == 5){                                            // CARGA PONTO PARTIDA
+                        newLayer->SetContinuity(false);
+                        wxPen layerPen(data->GetColour(), 10, data->GetPenType());
+                        newLayer->SetPen(layerPen);
+                    } 
+                    else {                                                                    // CARGA NOMINAL
+                        newLayer->SetContinuity(true);
+                        wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
+                        newLayer->SetPen(layerPen);
+                    }                          
+                }
+                else {                                                                        //RELES E ICC
+                    newLayer->SetContinuity(true);
+                    wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
+                    newLayer->SetPen(layerPen);
+                    }                              
                 newLayer->SetDrawOutsideMargins(false);
                 newLayer->ShowName(false);
 
@@ -470,6 +491,8 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
             if(nextChild.IsOk()) return nextChild;
         }
         item = m_treeCtrl->GetNextChild(root, cookie);
+        
+        aux = aux + 1; //--------------------------------------------------------------------------******************************
     }
 
     wxTreeItemId dummyID;

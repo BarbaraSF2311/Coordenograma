@@ -448,6 +448,8 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
     wxTreeItemIdValue cookie;
     wxTreeItemId item = m_treeCtrl->GetFirstChild(root, cookie);
     wxTreeItemId child;
+	
+	int aux = 0; //--------------------------------------------------------------------------------***************************
 
     while(item.IsOk()) {
         if(PlotData* data = dynamic_cast<PlotData*>(m_treeCtrl->GetItemData(item))) {
@@ -455,7 +457,12 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
                 wxString parentName = m_treeCtrl->GetItemText(m_treeCtrl->GetItemParent(item));
                 mpFXYVector* newLayer = new mpFXYVector(data->GetName() + " (" + parentName + ")");
                 newLayer->SetData(m_xAxisValues, data->GetValues());
-                newLayer->SetContinuity(true);
+                if(m_ListaTipo[aux] == 3 || m_ListaTipo[aux] == 4) {newLayer->SetContinuity(false);}  // ANSI OU INRUSH
+                else if(m_ListaTipo[aux] == 5) {                                   // CARGA
+                    if(m_ListaTipo[aux - 1] == 5){newLayer->SetContinuity(false);} // CARGA PONTO PARTIDA
+                    else {newLayer->SetContinuity(true);}                          // CARGA NOMINAL
+                }
+                else {newLayer->SetContinuity(true);}                              //RELES E ICC
                 wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
                 newLayer->SetPen(layerPen);
                 newLayer->SetDrawOutsideMargins(false);
@@ -470,6 +477,8 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
             if(nextChild.IsOk()) return nextChild;
         }
         item = m_treeCtrl->GetNextChild(root, cookie);
+		
+		aux = aux + 1; //--------------------------------------------------------------------------******************************
     }
 
     wxTreeItemId dummyID;
