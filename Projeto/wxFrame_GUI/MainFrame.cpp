@@ -25,7 +25,6 @@ void MainFrame::InitFrame()
     ChangePropertyText(m_pgTempoDefinido,wxT("-"));
     ChangePropertyText(m_pgTipoCurva,wxT("-"));
 }
-
 void MainFrame::BuildGrid()
 {
     m_grid->SetSelectionMode(wxGrid::wxGridSelectRows);
@@ -72,12 +71,44 @@ void MainFrame::BuildGrid()
     m_grid->SetColFormatFloat(7, 7, 2);
     m_grid->SetColFormatFloat(8, 7, 2);
 
-    //m_grid->SetCellValue(1,2,wxT("Teste 1x2"));
-    
-    //m_grid->AutoSizeColumns();
-    //m_grid->Refresh();
 }
-
+void MainFrame::AttLineGrid(float itemID)
+{
+    int ID = itemID;
+    for(int i = 0; i <= (m_grid->GetNumberRows() - 1); i++){
+        if(wxString::Format("%d", ID) == m_grid->GetCellValue(i, 10)){
+            if(m_Lista[i].m_Tipo == 1 || m_Lista[i].m_Tipo == 2){          //RELE 5051 5051TD
+                m_grid->SetCellValue(i, 3, wxString::Format("%f", m_Lista[i].m_TMS));
+                m_grid->SetCellValue(i, 5, wxString::Format("%f", m_Lista[i].m_Itf));
+                m_grid->SetCellValue(i, 6, wxString::Format("%f", m_Lista[i].m_RTC));
+                m_grid->SetCellValue(i, 7, wxString::Format("%f", (m_Lista[i].m_Iaif/1000)));
+                if(m_Lista[i].m_Tipo == 2){m_grid->SetCellValue(i, 8, wxString::Format("%f", m_Lista[i].m_TempoDefinido));}
+                
+                if(m_Lista[i].m_TipoCurva == 1){m_grid->SetCellValue(i, 9, wxT("Curva Normalmente Inversa"));}
+                else if(m_Lista[i].m_TipoCurva == 2){m_grid->SetCellValue(i, 9, wxT("Curva Muito Inversa"));}
+                else if(m_Lista[i].m_TipoCurva == 3){m_grid->SetCellValue(i, 9, wxT("Curva Extremamente Inversa"));}
+                else if(m_Lista[i].m_TipoCurva == 4){m_grid->SetCellValue(i, 9, wxT("Curva Inversa Longa"));}
+                else if(m_Lista[i].m_TipoCurva == 5){m_grid->SetCellValue(i, 9, wxT("Curva Inversa Curta"));}
+                else if(m_Lista[i].m_TipoCurva == 6){m_grid->SetCellValue(i, 9, wxT("Curva Térmica IXT"));}
+                else if(m_Lista[i].m_TipoCurva == 7){m_grid->SetCellValue(i, 9, wxT("Curva Térmica I²XT"));}
+            }
+            
+            else if(m_Lista[i].m_Tipo == 3 || m_Lista[i].m_Tipo == 4){                             //ANSI OU INRUSH
+                m_grid->SetCellValue(i, 2, wxString::Format("%f", (m_Lista[i].m_Corrente/1000)));
+                m_grid->SetCellValue(i, 3, wxString::Format("%f", m_Lista[i].m_Tempo));
+            }
+            
+            else if(m_Lista[i].m_Tipo == 5){                                                       //CARGA
+                m_grid->SetCellValue(i, 2, wxString::Format("%f", (m_Lista[i].m_Corrente/1000)));
+                m_grid->SetCellValue(i, 3, wxString::Format("%f", m_Lista[i].m_Carga_Tpartida));
+                m_grid->SetCellValue(i, 4, wxString::Format("%f", (m_Lista[i].m_Carga_Ipartida/1000)));
+            }
+            
+            else if(m_Lista[i].m_Tipo == 6){m_grid->SetCellValue(i, 2, wxString::Format("%f", (m_Lista[i].m_Corrente/1000)));} //ICC
+        }
+    }
+    m_grid->Refresh();
+}
 void MainFrame::btnClickAdicionar(wxCommandEvent& event)
 {
     Item novoItem;
@@ -202,9 +233,9 @@ void MainFrame::btnClickAdicionar(wxCommandEvent& event)
     m_pgIAIF->SetValue(0);
     m_pgTempoDefinido->SetValue(0);
     
+    m_btnCoord->Enable(true);
     
 }
-
 void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
 {
     std::vector<double> tempo;
@@ -480,7 +511,7 @@ void MainFrame::onPGChange(wxPropertyGridEvent& event)
     ChangePropertyText(m_pgTipoCurva,wxT("-"));
     
     switch(m_pgTipo->GetValue().GetInteger()){
-        case 1:{ //RelÃ© 50/51
+        case 1:{ //Relé 50/51
             //ChangePropertyText(m_pgCorrente,wxT("Corrente"));
             ChangePropertyText(m_pgTempo,wxT("TMS"));
             ChangePropertyText(m_pgITF,wxT("Itf"));
@@ -548,37 +579,91 @@ void MainFrame::ChangePropertyText(wxPGProperty* property, wxString newText)
     cell.SetText(newText);
     property->SetCell(0, cell);
 }
-
 void MainFrame::grid_CellSelected(wxGridEvent& event)
 {
-    //int row = event.GetRow();
-
-    //wxString texto = "";
-    //texto += wxString::Format("Row is %f\n", row);
-    //wxMessageBox(texto);
-    
-    //m_grid->SetCellValue(row, 2, wxString::Format("teste"));
-    //printf("----------------------\n");
-    //printf(row);
-    
+    m_btnEdit->Enable(true);
+    m_btnExcluir->Enable(true);
     for(int i = 0; i < m_Lista.size(); i++){
-        if(wxString::Format("%d", m_Lista[i].m_ID) == m_grid->GetCellValue(event.GetRow(), 10)){m_Lista[i].m_StatusDelete = 1;}
-        else{m_Lista[i].m_StatusDelete = 0;}
+        if(wxString::Format("%d", m_Lista[i].m_ID) == m_grid->GetCellValue(event.GetRow(), 10)){m_Lista[i].m_StatusModify = 1;}
+        else{m_Lista[i].m_StatusModify = 0;}
     }
-    
 }
 void MainFrame::btnClickExcluir(wxCommandEvent& event)
 {
-    //wxString texto = "";
     for(int i = 0; i < m_Lista.size(); i++){
-        if(m_Lista[i].m_StatusDelete == 1){
+        if(m_Lista[i].m_StatusModify == 1){
             m_Lista.erase(m_Lista.begin()+i);
             m_grid->DeleteRows(i);
         }
     }
     
+    if(m_Lista.empty()){
+        m_btnEdit->Enable(false);
+        m_btnExcluir->Enable(false);
+        m_btnCoord->Enable(false);
+    }
+}
+void MainFrame::btnClickEditar(wxCommandEvent& event)
+{
+    std::vector<float> itemEdit;
     
+    for(int i = 0; i < m_Lista.size(); i++){
+        if(m_Lista[i].m_StatusModify == 1){
+            
+            itemEdit.push_back(m_Lista[i].m_ID);
+            itemEdit.push_back(m_Lista[i].m_Tipo);
+            
+            if(m_Lista[i].m_Tipo == 1 || m_Lista[i].m_Tipo == 2){   //RELE 5051 E RELE5051TD
+                itemEdit.push_back(m_Lista[i].m_TMS);
+                itemEdit.push_back(m_Lista[i].m_Itf);
+                itemEdit.push_back(m_Lista[i].m_RTC);
+                itemEdit.push_back(m_Lista[i].m_Iaif);
+                itemEdit.push_back(m_Lista[i].m_TipoCurva);
+                if(m_Lista[i].m_Tipo == 2){itemEdit.push_back(m_Lista[i].m_TempoDefinido);} // RELETD
+            }
+            
+            else{ 
+                itemEdit.push_back(m_Lista[i].m_Corrente);                  //ICC
+                if(m_Lista[i].m_Tipo == 3 || m_Lista[i].m_Tipo == 4){       //ANSI E INRUSH
+                    itemEdit.push_back(m_Lista[i].m_Tempo);
+                }
+                else if(m_Lista[i].m_Tipo == 5){                           //CARGA
+                    itemEdit.push_back(m_Lista[i].m_Carga_Ipartida);
+                    itemEdit.push_back(m_Lista[i].m_Carga_Tpartida);
+                }
+            }
+        }
+    }
     
-    //for(auto item : m_Lista){texto += wxString::Format("id: %d  status: %d\n", item.m_ID, item.m_StatusDelete);}
-    //wxMessageBox(texto);
+    edit_Dialog* eDialog = new edit_Dialog(nullptr, itemEdit);
+    eDialog->ShowModal();
+    
+    for(int i = 0; i < m_Lista.size(); i++){
+        if(m_Lista[i].m_ID == eDialog->m_itemEdit[0]){   //RELE 5051 E RELE5051TD
+        
+            if(m_Lista[i].m_Tipo == 1 || m_Lista[i].m_Tipo == 2){   //RELE 5051 E RELE5051TD
+                m_Lista[i].m_TMS = eDialog->m_itemEdit[2];
+                m_Lista[i].m_Itf = eDialog->m_itemEdit[3];
+                m_Lista[i].m_RTC = eDialog->m_itemEdit[4];
+                m_Lista[i].m_Iaif = eDialog->m_itemEdit[5];
+                m_Lista[i].m_TipoCurva = eDialog->m_itemEdit[6];
+                if(m_Lista[i].m_Tipo == 2){m_Lista[i].m_TempoDefinido = eDialog->m_itemEdit[7];} // RELETD
+            }
+            
+            else{ 
+                m_Lista[i].m_Corrente = eDialog->m_itemEdit[2];             //ICC
+                if(m_Lista[i].m_Tipo == 3 || m_Lista[i].m_Tipo == 4){       //ANSI E INRUSH
+                    m_Lista[i].m_Tempo = eDialog->m_itemEdit[3];
+                }
+                else if(m_Lista[i].m_Tipo == 5){                           //CARGA
+                    m_Lista[i].m_Carga_Ipartida = eDialog->m_itemEdit[4];
+                    m_Lista[i].m_Carga_Tpartida = eDialog->m_itemEdit[5];
+                }
+            }
+        }
+    }
+    
+    AttLineGrid(eDialog->m_itemEdit[0]);
+    
+    eDialog->Destroy();
 }

@@ -9,6 +9,7 @@
 #include <wx/msgdlg.h>
 #include <complex.h>
 #include <cmath>
+#include "edit_Dialog.h"
 
 struct Item{
     
@@ -25,8 +26,7 @@ struct Item{
     double m_Iaif = 0;
     double m_TempoDefinido = 0;  
     int m_TipoCurva = 0; //1=inversa;2=MI;3=EI;4=InvLonga;5=InvCurta;6=Termica1;7=Term.2;
-    //bool m_StatusEdit = false;
-    int m_StatusDelete = 0;
+    int m_StatusModify = 0;
     
     
 };
@@ -39,6 +39,7 @@ public:
     virtual ~MainFrame();
 
 protected:
+    virtual void btnClickEditar(wxCommandEvent& event);
     virtual void btnClickExcluir(wxCommandEvent& event);
     virtual void grid_CellSelected(wxGridEvent& event);
     virtual void btnClickAdicionar(wxCommandEvent& event);
@@ -47,6 +48,7 @@ protected:
     
     virtual void InitFrame();
     virtual void BuildGrid();
+    virtual void AttLineGrid(float itemID);
     virtual void ChangePropertyText(wxPGProperty* property, wxString newText);
     
     std::vector<Item> m_Lista;

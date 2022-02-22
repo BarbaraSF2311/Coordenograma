@@ -1,27 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CodeLite_Project Name="wxFrame_GUI" Version="11000" InternalType="GUI">
+  <VirtualDirectory Name="ChartView/">
+    <File Name="../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/wxMathPlot/mathplot.h" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ElementPlotData.cpp" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ChartViewBitmaps.cpp" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ChartViewBase.cpp" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ChartView.cpp" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ElementPlotData.h" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ChartViewBase.h" ExcludeProjConfig="Debug;"/>
+    <File Name="../../ChartView-main/ChartView/ChartView.h" ExcludeProjConfig="Debug;"/>
+  </VirtualDirectory>
+  <VirtualDirectory Name="include">
+    <File Name="wxcrafter_bitmaps.cpp"/>
+    <File Name="wxcrafter.cpp"/>
+    <File Name="MainFrame.cpp"/>
+    <File Name="main.cpp"/>
+    <File Name="wxcrafter.h"/>
+    <File Name="MainFrame.h"/>
+  </VirtualDirectory>
   <Description/>
   <Dependencies/>
   <VirtualDirectory Name="src">
-    <File Name="../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp"/>
-    <File Name="../../ChartView-main/ChartView/ElementPlotData.cpp"/>
-    <File Name="../../ChartView-main/ChartView/ChartViewBitmaps.cpp"/>
-    <File Name="../../ChartView-main/ChartView/ChartViewBase.cpp"/>
-    <File Name="../../ChartView-main/ChartView/ChartView.cpp"/>
-    <File Name="main.cpp"/>
-    <File Name="MainFrame.cpp"/>
-    <File Name="wxcrafter.cpp"/>
-    <File Name="wxcrafter_bitmaps.cpp"/>
-  </VirtualDirectory>
-  <VirtualDirectory Name="include">
-    <File Name="../../ChartView-main/ChartView/wxMathPlot/mathplot.h"/>
-    <File Name="../../ChartView-main/ChartView/ElementPlotData.h"/>
-    <File Name="../../ChartView-main/ChartView/ChartViewBase.h"/>
-    <File Name="../../ChartView-main/ChartView/ChartView.h"/>
-    <File Name="MainFrame.h"/>
-    <File Name="wxcrafter.h"/>
+    <File Name="wxMathPlot/mathplot.h" ExcludeProjConfig=""/>
+    <File Name="wxMathPlot/mathplot.cpp" ExcludeProjConfig=""/>
+    <File Name="ElementPlotData.h" ExcludeProjConfig=""/>
+    <File Name="ElementPlotData.cpp" ExcludeProjConfig=""/>
+    <File Name="ChartViewBitmaps.cpp" ExcludeProjConfig=""/>
+    <File Name="ChartViewBase.h" ExcludeProjConfig=""/>
+    <File Name="ChartViewBase.cpp" ExcludeProjConfig=""/>
+    <File Name="ChartView.cpp" ExcludeProjConfig=""/>
+    <File Name="ChartView.h" ExcludeProjConfig=""/>
   </VirtualDirectory>
   <VirtualDirectory Name="resources">
+    <File Name="edit_Dialog.h"/>
+    <File Name="edit_Dialog.cpp"/>
     <File Name="wxcrafter.wxcp"/>
     <File Name="win_resources.rc"/>
   </VirtualDirectory>

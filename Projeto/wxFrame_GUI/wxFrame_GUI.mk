@@ -14,7 +14,7 @@ CurrentFileName        :=
 CurrentFilePath        :=
 CurrentFileFullPath    :=
 User                   :=Babala
-Date                   :=20/01/2022
+Date                   :=19/02/2022
 CodeLitePath           :="C:/Program Files/CodeLite"
 LinkerName             :=C:/TDM-GCC-64/bin/g++.exe
 SharedObjectLinkerName :=C:/TDM-GCC-64/bin/g++.exe -shared -fPIC
@@ -64,8 +64,8 @@ AS       := C:/TDM-GCC-64/bin/as.exe
 CodeLiteDir:=C:\Program Files\CodeLite
 WXWIN:=C:\wxWidgets
 WXCFG:=gcc_lib\mswu
-Objects0=../build-$(ConfigurationName)/wxFrame_GUI/win_resources.rc$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter.cpp$(ObjectSuffix) \
-	
+Objects0=../build-$(ConfigurationName)/wxFrame_GUI/win_resources.rc$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(ObjectSuffix) ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix) \
+	../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter.cpp$(ObjectSuffix) 
 
 
 
@@ -98,53 +98,61 @@ PreBuild:
 ##
 ../build-$(ConfigurationName)/wxFrame_GUI/win_resources.rc$(ObjectSuffix): win_resources.rc
 	$(RcCompilerName) -i "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/win_resources.rc" $(RcCmpOptions)   $(ObjectSwitch)$(IntermediateDirectory)/win_resources.rc$(ObjectSuffix) $(RcIncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix): main.cpp ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix): main.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix) -MM main.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(ObjectSuffix): edit_Dialog.cpp ../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/edit_Dialog.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/edit_Dialog.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(DependSuffix): edit_Dialog.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(DependSuffix) -MM edit_Dialog.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(PreprocessSuffix): main.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(PreprocessSuffix) main.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(PreprocessSuffix): edit_Dialog.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/edit_Dialog.cpp$(PreprocessSuffix) edit_Dialog.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(ObjectSuffix): ../../ChartView-main/ChartView/ChartViewBase.cpp ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/ChartView-main/ChartView/ChartViewBase.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(DependSuffix): ../../ChartView-main/ChartView/ChartViewBase.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(DependSuffix) -MM ../../ChartView-main/ChartView/ChartViewBase.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(ObjectSuffix): ChartView.cpp ../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/ChartView.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/ChartView.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(DependSuffix): ChartView.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(DependSuffix) -MM ChartView.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(PreprocessSuffix): ../../ChartView-main/ChartView/ChartViewBase.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBase.cpp$(PreprocessSuffix) ../../ChartView-main/ChartView/ChartViewBase.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(PreprocessSuffix): ChartView.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/ChartView.cpp$(PreprocessSuffix) ChartView.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(ObjectSuffix): ../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/ChartView-main/ChartView/wxMathPlot/mathplot.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(DependSuffix): ../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(DependSuffix) -MM ../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(ObjectSuffix): ChartViewBitmaps.cpp ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/ChartViewBitmaps.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/ChartViewBitmaps.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(DependSuffix): ChartViewBitmaps.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(DependSuffix) -MM ChartViewBitmaps.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(PreprocessSuffix): ../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_wxMathPlot_mathplot.cpp$(PreprocessSuffix) ../../ChartView-main/ChartView/wxMathPlot/mathplot.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(PreprocessSuffix): ChartViewBitmaps.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBitmaps.cpp$(PreprocessSuffix) ChartViewBitmaps.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(ObjectSuffix): ../../ChartView-main/ChartView/ChartView.cpp ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/ChartView-main/ChartView/ChartView.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_ChartView-main_ChartView_ChartView.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(DependSuffix): ../../ChartView-main/ChartView/ChartView.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(DependSuffix) -MM ../../ChartView-main/ChartView/ChartView.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(ObjectSuffix): wxMathPlot/mathplot.cpp ../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/wxMathPlot/mathplot.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/wxMathPlot_mathplot.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(DependSuffix): wxMathPlot/mathplot.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(DependSuffix) -MM wxMathPlot/mathplot.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(PreprocessSuffix): ../../ChartView-main/ChartView/ChartView.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartView.cpp$(PreprocessSuffix) ../../ChartView-main/ChartView/ChartView.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(PreprocessSuffix): wxMathPlot/mathplot.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/wxMathPlot_mathplot.cpp$(PreprocessSuffix) wxMathPlot/mathplot.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(ObjectSuffix): ../../ChartView-main/ChartView/ChartViewBitmaps.cpp ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/ChartView-main/ChartView/ChartViewBitmaps.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(DependSuffix): ../../ChartView-main/ChartView/ChartViewBitmaps.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(DependSuffix) -MM ../../ChartView-main/ChartView/ChartViewBitmaps.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(ObjectSuffix): ChartViewBase.cpp ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/ChartViewBase.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/ChartViewBase.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(DependSuffix): ChartViewBase.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(DependSuffix) -MM ChartViewBase.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(PreprocessSuffix): ../../ChartView-main/ChartView/ChartViewBitmaps.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ChartViewBitmaps.cpp$(PreprocessSuffix) ../../ChartView-main/ChartView/ChartViewBitmaps.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(PreprocessSuffix): ChartViewBase.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/ChartViewBase.cpp$(PreprocessSuffix) ChartViewBase.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(ObjectSuffix): ../../ChartView-main/ChartView/ElementPlotData.cpp ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/ChartView-main/ChartView/ElementPlotData.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(DependSuffix): ../../ChartView-main/ChartView/ElementPlotData.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(DependSuffix) -MM ../../ChartView-main/ChartView/ElementPlotData.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(ObjectSuffix): ElementPlotData.cpp ../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/ElementPlotData.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/ElementPlotData.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(DependSuffix): ElementPlotData.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(DependSuffix) -MM ElementPlotData.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(PreprocessSuffix): ../../ChartView-main/ChartView/ElementPlotData.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/up_up_ChartView-main_ChartView_ElementPlotData.cpp$(PreprocessSuffix) ../../ChartView-main/ChartView/ElementPlotData.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(PreprocessSuffix): ElementPlotData.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/ElementPlotData.cpp$(PreprocessSuffix) ElementPlotData.cpp
+
+../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix): wxcrafter_bitmaps.cpp ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/wxcrafter_bitmaps.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/wxcrafter_bitmaps.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix): wxcrafter_bitmaps.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix) -MM wxcrafter_bitmaps.cpp
+
+../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(PreprocessSuffix): wxcrafter_bitmaps.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(PreprocessSuffix) wxcrafter_bitmaps.cpp
 
 ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(ObjectSuffix): MainFrame.cpp ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/MainFrame.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/MainFrame.cpp$(ObjectSuffix) $(IncludePath)
@@ -154,13 +162,13 @@ PreBuild:
 ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(PreprocessSuffix): MainFrame.cpp
 	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/MainFrame.cpp$(PreprocessSuffix) MainFrame.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix): wxcrafter_bitmaps.cpp ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix)
-	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/wxcrafter_bitmaps.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/wxcrafter_bitmaps.cpp$(ObjectSuffix) $(IncludePath)
-../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix): wxcrafter_bitmaps.cpp
-	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(DependSuffix) -MM wxcrafter_bitmaps.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix): main.cpp ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix)
+	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/main.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/main.cpp$(ObjectSuffix) $(IncludePath)
+../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix): main.cpp
+	@$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) -MG -MP -MT../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(ObjectSuffix) -MF../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(DependSuffix) -MM main.cpp
 
-../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(PreprocessSuffix): wxcrafter_bitmaps.cpp
-	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter_bitmaps.cpp$(PreprocessSuffix) wxcrafter_bitmaps.cpp
+../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(PreprocessSuffix): main.cpp
+	$(CXX) $(CXXFLAGS) $(IncludePCH) $(IncludePath) $(PreprocessOnlySwitch) $(OutputSwitch) ../build-$(ConfigurationName)/wxFrame_GUI/main.cpp$(PreprocessSuffix) main.cpp
 
 ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter.cpp$(ObjectSuffix): wxcrafter.cpp ../build-$(ConfigurationName)/wxFrame_GUI/wxcrafter.cpp$(DependSuffix)
 	$(CXX) $(IncludePCH) $(SourceSwitch) "C:/Users/Babala/Documents/GitHub/Coordenograma/Projeto/wxFrame_GUI/wxcrafter.cpp" $(CXXFLAGS) $(ObjectSwitch)$(IntermediateDirectory)/wxcrafter.cpp$(ObjectSuffix) $(IncludePath)

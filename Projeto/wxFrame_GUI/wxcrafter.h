@@ -21,6 +21,11 @@
 #include <wx/propgrid/advprops.h>
 #include <wx/button.h>
 #include <wx/grid.h>
+#include <wx/dialog.h>
+#include <wx/stattext.h>
+#include <wx/textctrl.h>
+#include <wx/choice.h>
+#include <wx/arrstr.h>
 #if wxVERSION_NUMBER >= 2900
 #include <wx/persist.h>
 #include <wx/persist/toplevel.h>
@@ -53,9 +58,10 @@ protected:
     wxPGProperty* m_pgIAIF;
     wxPGProperty* m_pgTempoDefinido;
     wxPGProperty* m_pgTipoCurva;
-    wxButton* m_button35;
-    wxButton* m_button131;
-    wxButton* m_button51;
+    wxButton* m_btnAdd;
+    wxButton* m_btnEdit;
+    wxButton* m_btnExcluir;
+    wxButton* m_btnCoord;
     wxGrid* m_grid;
 
 protected:
@@ -64,6 +70,10 @@ protected:
         event.Skip();
     }
     virtual void btnClickAdicionar(wxCommandEvent& event)
+    {
+        event.Skip();
+    }
+    virtual void btnClickEditar(wxCommandEvent& event)
     {
         event.Skip();
     }
@@ -85,17 +95,21 @@ public:
     {
         return m_pgDados;
     }
-    wxButton* GetButton35()
+    wxButton* GetBtnAdd()
     {
-        return m_button35;
+        return m_btnAdd;
     }
-    wxButton* GetButton131()
+    wxButton* GetBtnEdit()
     {
-        return m_button131;
+        return m_btnEdit;
     }
-    wxButton* GetButton51()
+    wxButton* GetBtnExcluir()
     {
-        return m_button51;
+        return m_btnExcluir;
+    }
+    wxButton* GetBtnCoord()
+    {
+        return m_btnCoord;
     }
     wxGrid* GetGrid()
     {
@@ -109,9 +123,108 @@ public:
         wxWindowID id = wxID_ANY,
         const wxString& title = _("Coordenograma"),
         const wxPoint& pos = wxDefaultPosition,
-        const wxSize& size = wxSize(700, 400),
+        const wxSize& size = wxSize(1000, 400),
         long style = wxCAPTION | wxRESIZE_BORDER | wxMAXIMIZE_BOX | wxMINIMIZE_BOX | wxSYSTEM_MENU | wxCLOSE_BOX);
     virtual ~MainFrameBaseClass();
+};
+
+class editDialog : public wxDialog
+{
+protected:
+    wxPanel* m_panel1392;
+    wxStaticText* m_lbl1;
+    wxStaticText* m_lbl2;
+    wxStaticText* m_lbl3;
+    wxStaticText* m_lbl4;
+    wxStaticText* m_lbl5;
+    wxStaticText* m_lbl6;
+    wxTextCtrl* m_txt1;
+    wxTextCtrl* m_txt2;
+    wxTextCtrl* m_txt3;
+    wxTextCtrl* m_txt4;
+    wxTextCtrl* m_txt5;
+    wxChoice* m_choiceTC;
+    wxButton* btnCancelar20;
+    wxButton* m_button16721;
+
+protected:
+    virtual void btnClickCancelar(wxCommandEvent& event)
+    {
+        event.Skip();
+    }
+    virtual void btnClickEditar(wxCommandEvent& event)
+    {
+        event.Skip();
+    }
+
+public:
+    wxStaticText* GetLbl1()
+    {
+        return m_lbl1;
+    }
+    wxStaticText* GetLbl2()
+    {
+        return m_lbl2;
+    }
+    wxStaticText* GetLbl3()
+    {
+        return m_lbl3;
+    }
+    wxStaticText* GetLbl4()
+    {
+        return m_lbl4;
+    }
+    wxStaticText* GetLbl5()
+    {
+        return m_lbl5;
+    }
+    wxStaticText* GetLbl6()
+    {
+        return m_lbl6;
+    }
+    wxTextCtrl* GetTxt1()
+    {
+        return m_txt1;
+    }
+    wxTextCtrl* GetTxt2()
+    {
+        return m_txt2;
+    }
+    wxTextCtrl* GetTxt3()
+    {
+        return m_txt3;
+    }
+    wxTextCtrl* GetTxt4()
+    {
+        return m_txt4;
+    }
+    wxTextCtrl* GetTxt5()
+    {
+        return m_txt5;
+    }
+    wxChoice* GetChoiceTC()
+    {
+        return m_choiceTC;
+    }
+    wxButton* GetBtnCancelar20()
+    {
+        return btnCancelar20;
+    }
+    wxButton* GetButton16721()
+    {
+        return m_button16721;
+    }
+    wxPanel* GetPanel1392()
+    {
+        return m_panel1392;
+    }
+    editDialog(wxWindow* parent,
+        wxWindowID id = wxID_ANY,
+        const wxString& title = _("Editar"),
+        const wxPoint& pos = wxDefaultPosition,
+        const wxSize& size = wxSize(-1, -1),
+        long style = wxDEFAULT_DIALOG_STYLE);
+    virtual ~editDialog();
 };
 
 #endif
