@@ -120,6 +120,7 @@ void MainFrame::btnClickAdicionar(wxCommandEvent& event)
     switch (m_pgTipo->GetValue().GetInteger()) {
         case 0: //Nenhum selecionado
             wxMessageBox(wxT("Selecione o tipo de dado"));
+            m_IDatual--;
             break;
         case 1: //Rele 50/51
             novoItem.m_Nome = m_pgNome->GetDisplayedString();
@@ -219,12 +220,14 @@ void MainFrame::btnClickAdicionar(wxCommandEvent& event)
             
             if(m_pgNome->GetDisplayedString() == ""){novoItem.m_Nome = wxString::Format("%d - ", novoItem.m_ID) + m_pgTipo->GetDisplayedString();}
     }
-
-    m_Lista.push_back(novoItem);
     
-    m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 0, novoItem.m_Nome);
-    m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 1, m_pgTipo->GetDisplayedString());
-    m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 10, wxString::Format("%d", novoItem.m_ID));
+    if(m_pgTipo->GetValue().GetInteger() != 0){
+        m_Lista.push_back(novoItem);
+        
+        m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 0, novoItem.m_Nome);
+        m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 1, m_pgTipo->GetDisplayedString());
+        m_grid->SetCellValue(m_grid->GetNumberRows() - 1, 10, wxString::Format("%d", novoItem.m_ID));
+    }
     
     m_pgCorrente->SetValue(0);              //Zerar os valores
     m_pgTempo->SetValue(0);
@@ -255,9 +258,11 @@ void MainFrame::btnClickCoordenograma(wxCommandEvent& event)
         }
         else{
             if(item.m_Corrente <= (CorrenteInicioPlot + 100)){CorrenteInicioPlot = item.m_Corrente - 100;}
-            if(item.m_Corrente >= (CorrenteFimPlot - 100)){CorrenteFimPlot = item.m_Corrente + 100;}
+            if(item.m_Corrente >= (CorrenteFimPlot - 1000)){CorrenteFimPlot = item.m_Corrente + 1000;}
         }
     }
+    
+    if (CorrenteInicioPlot < 1) {CorrenteInicioPlot = 1;}
 
     double Imtempo = CorrenteInicioPlot;   //Onde comeca o plot
 

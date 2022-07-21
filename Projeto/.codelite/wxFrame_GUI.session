@@ -1,51 +1,99 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Session Name="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI.workspace">
-  <int Value="4" Name="m_selectedTab"/>
+  <int Value="1" Name="m_selectedTab"/>
   <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI.workspace" Name="m_workspaceName"/>
   <TabInfoArray Name="TabInfoArray">
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\edit_Dialog.cpp" Name="FileName"/>
-      <int Value="105" Name="FirstVisibleLine"/>
-      <int Value="14" Name="CurrentLine"/>
+      <int Value="157" Name="FirstVisibleLine"/>
+      <int Value="186" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\MainFrame.cpp" Name="FileName"/>
-      <int Value="9" Name="FirstVisibleLine"/>
-      <int Value="591" Name="CurrentLine"/>
+      <int Value="48" Name="FirstVisibleLine"/>
+      <int Value="286" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds">
         <IntVectorItem Value="8"/>
         <IntVectorItem Value="28"/>
         <IntVectorItem Value="75"/>
         <IntVectorItem Value="112"/>
-        <IntVectorItem Value="239"/>
-        <IntVectorItem Value="496"/>
-        <IntVectorItem Value="576"/>
-        <IntVectorItem Value="582"/>
-        <IntVectorItem Value="591"/>
-        <IntVectorItem Value="606"/>
+        <IntVectorItem Value="501"/>
+        <IntVectorItem Value="581"/>
+        <IntVectorItem Value="587"/>
+        <IntVectorItem Value="596"/>
+        <IntVectorItem Value="611"/>
       </IntVector>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\edit_Dialog.h" Name="FileName"/>
-      <int Value="0" Name="FirstVisibleLine"/>
-      <int Value="12" Name="CurrentLine"/>
+      <int Value="15" Name="FirstVisibleLine"/>
+      <int Value="17" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\MainFrame.h" Name="FileName"/>
-      <int Value="9" Name="FirstVisibleLine"/>
-      <int Value="49" Name="CurrentLine"/>
+      <int Value="44" Name="FirstVisibleLine"/>
+      <int Value="46" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ElementPlotData.cpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ElementPlotData.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>
     <TabInfo>
       <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\wxcrafter.cpp" Name="FileName"/>
-      <int Value="101" Name="FirstVisibleLine"/>
-      <int Value="110" Name="CurrentLine"/>
+      <int Value="146" Name="FirstVisibleLine"/>
+      <int Value="148" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\wxcrafter.h" Name="FileName"/>
+      <int Value="8" Name="FirstVisibleLine"/>
+      <int Value="10" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ChartView.cpp" Name="FileName"/>
+      <int Value="103" Name="FirstVisibleLine"/>
+      <int Value="105" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ChartView.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ChartViewBase.cpp" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
+      <wxArrayString Name="Bookmarks"/>
+      <IntVector Name="CollapsedFolds"/>
+    </TabInfo>
+    <TabInfo>
+      <wxString Value="C:\Users\Babala\Documents\GitHub\Coordenograma\Projeto\wxFrame_GUI\ChartViewBase.h" Name="FileName"/>
+      <int Value="0" Name="FirstVisibleLine"/>
+      <int Value="0" Name="CurrentLine"/>
       <wxArrayString Name="Bookmarks"/>
       <IntVector Name="CollapsedFolds"/>
     </TabInfo>

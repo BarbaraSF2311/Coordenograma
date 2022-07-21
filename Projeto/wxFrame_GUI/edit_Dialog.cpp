@@ -173,8 +173,8 @@ void edit_Dialog::btnClickEditar(wxCommandEvent& event)
             m_itemEdit[3] = wxAtof(m_txt2->GetValue()); //Itf
             m_itemEdit[4] = wxAtoi(m_txt3->GetValue()); //RTC
             m_itemEdit[5] = wxAtof(m_txt4->GetValue())*1000; //Iaif
-            m_itemEdit[6] = wxAtof(m_txt5->GetValue()); //TD
-            m_itemEdit[7] = m_choiceTC->GetSelection(); //TipoCurva
+            m_itemEdit[7] = wxAtof(m_txt5->GetValue()); //TD
+            m_itemEdit[6] = m_choiceTC->GetSelection(); //TipoCurva
             
             break;
         

@@ -1,3 +1,35 @@
+std	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr {$/;"	namespace	line:1
+shared_ptr	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^namespace std { template<typename _Tp> class shared_ptr { $/;"	class	line:1	namespace:std
+operator ->	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _Tp* operator->();$/;"	prototype	line:2	class:std::shared_ptr	access:private	signature:()	returns:_Tp 
+reset	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr );$/;"	prototype	line:3	class:std::shared_ptr	access:private	signature:( Y* ptr )	returns:void 
+reset	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d );$/;"	prototype	line:4	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d )	returns:void 
+reset	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    void reset( Y* ptr, Deleter d, Alloc alloc );$/;"	prototype	line:5	class:std::shared_ptr	access:private	signature:( Y* ptr, Deleter d, Alloc alloc )	returns:void 
+get	C:\Users\Babala\AppData\Roaming\codelite\tmp\codelite_templates.hpp	/^    _T* get() const;$/;"	prototype	line:6	class:std::shared_ptr	access:private	signature:() const	returns:_T 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -100,30 +132,6 @@ SCARD_W_CANCELLED_BY_USER	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^
 SCARD_W_CARD_NOT_AUTHENTICATED	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CARD_NOT_AUTHENTICATED ((DWORD)0x8010006F)$/;"	macro	line:75
 SCARD_W_CACHE_ITEM_NOT_FOUND	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CACHE_ITEM_NOT_FOUND ((DWORD)0x80100070)$/;"	macro	line:77
 SCARD_W_CACHE_ITEM_STALE	C:\TDM-GCC-64\x86_64-w64-mingw32\include\scarderr.h	/^#define SCARD_W_CACHE_ITEM_STALE ((DWORD)0x80100071)$/;"	macro	line:78
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

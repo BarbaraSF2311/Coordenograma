@@ -80,7 +80,7 @@
 				}, {
 					"type":	"string",
 					"m_label":	"Title:",
-					"m_value":	"Coordenograma"
+					"m_value":	"PSC-COORD"
 				}, {
 					"type":	"virtualFolderPicker",
 					"m_label":	"Virtual Folder:",
@@ -126,7 +126,7 @@
 				}, {
 					"type":	"bitmapPicker",
 					"m_label":	"Bitmap File (256x256):",
-					"m_path":	""
+					"m_path":	"LOGO_1.png"
 				}],
 			"m_events":	[],
 			"m_children":	[{
@@ -1634,7 +1634,7 @@
 				}, {
 					"type":	"bitmapPicker",
 					"m_label":	"Bitmap File (256x256):",
-					"m_path":	""
+					"m_path":	"LOGO_1.png"
 				}],
 			"m_events":	[],
 			"m_children":	[{

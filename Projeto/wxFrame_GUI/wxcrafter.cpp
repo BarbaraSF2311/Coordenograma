@@ -25,6 +25,15 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
         wxC9ED9InitBitmapResources();
         bBitmapLoaded = true;
     }
+    // Set icon(s) to the application/dialog
+    wxIconBundle app_icons;
+    {
+        wxBitmap iconBmp = wxXmlResource::Get()->LoadBitmap(wxT("LOGO_1"));
+        wxIcon icn;
+        icn.CopyFromBitmap(iconBmp);
+        app_icons.AddIcon(icn);
+    }
+    SetIcons(app_icons);
 
     wxBoxSizer* boxSizer1 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(boxSizer1);
@@ -99,7 +108,7 @@ MainFrameBaseClass::MainFrameBaseClass(wxWindow* parent,
 
     m_pgDadosArr.Clear();
     m_pgDadosIntArr.Clear();
-    m_pgDadosArr.Add(_("Tipo de curva"));
+    m_pgDadosArr.Add(_(" "));
     m_pgDadosArr.Add(_("Curva Normalmente Inversa"));
     m_pgDadosArr.Add(_("Curva Muito Inversa"));
     m_pgDadosArr.Add(_("Curva Extremamente Inversa"));
@@ -206,6 +215,15 @@ editDialog::editDialog(wxWindow* parent,
         wxC9ED9InitBitmapResources();
         bBitmapLoaded = true;
     }
+    // Set icon(s) to the application/dialog
+    wxIconBundle app_icons;
+    {
+        wxBitmap iconBmp = wxXmlResource::Get()->LoadBitmap(wxT("LOGO_1"));
+        wxIcon icn;
+        icn.CopyFromBitmap(iconBmp);
+        app_icons.AddIcon(icn);
+    }
+    SetIcons(app_icons);
 
     wxBoxSizer* boxSizer1371 = new wxBoxSizer(wxVERTICAL);
     this->SetSizer(boxSizer1371);

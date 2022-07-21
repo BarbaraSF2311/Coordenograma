@@ -97,7 +97,7 @@ void ChartView::SetMPWindow()
 void ChartView::SetTreectrl()
 {
     wxTreeItemId rootID = m_treeCtrl->AddRoot(wxT("root"));
-    m_treeTimeID = m_treeCtrl->AppendItem(rootID, wxT("Tempo"));
+    m_treeTimeID = m_treeCtrl->AppendItem(rootID, wxT("PSC - COORDENOGRAMA"));
     m_treeCtrl->SetItemTextColour(m_treeTimeID, *wxRED);
 
     bool firstElement[static_cast<unsigned int>(ElementPlotData::CurveType::NUM_ELEMENTS)];
@@ -105,7 +105,7 @@ void ChartView::SetTreectrl()
 
     wxString rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::NUM_ELEMENTS)];
     // Adicionar novos tipos de curva aqui:
-    rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::CT_TEST)] = wxT("Teste");
+    rootElementName[static_cast<unsigned int>(ElementPlotData::CurveType::CT_TEST)] = wxT("Coordenograma");
 
     wxTreeItemId rootItemID[static_cast<unsigned int>(ElementPlotData::CurveType::NUM_ELEMENTS)];
 
@@ -457,14 +457,28 @@ wxTreeItemId ChartView::UpdateAllPlots(wxTreeItemId root)
                 wxString parentName = m_treeCtrl->GetItemText(m_treeCtrl->GetItemParent(item));
                 mpFXYVector* newLayer = new mpFXYVector(data->GetName() + " (" + parentName + ")");
                 newLayer->SetData(m_xAxisValues, data->GetValues());
-                if(m_ListaTipo[aux] == 3 || m_ListaTipo[aux] == 4) {newLayer->SetContinuity(false);}  // ANSI OU INRUSH
-                else if(m_ListaTipo[aux] == 5) {                                   // CARGA
-                    if(m_ListaTipo[aux - 1] == 5){newLayer->SetContinuity(false);} // CARGA PONTO PARTIDA
-                    else {newLayer->SetContinuity(true);}                          // CARGA NOMINAL
+                if(m_ListaTipo[aux] == 3 || m_ListaTipo[aux] == 4) {                          // ANSI OU INRUSH
+                    newLayer->SetContinuity(false);
+                    wxPen layerPen(data->GetColour(), 10, data->GetPenType());
+                    newLayer->SetPen(layerPen);
+                }  
+                else if(m_ListaTipo[aux] == 5) {                                              // CARGA
+                    if(m_ListaTipo[aux - 1] == 5){                                            // CARGA PONTO PARTIDA
+                        newLayer->SetContinuity(false);
+                        wxPen layerPen(data->GetColour(), 10, data->GetPenType());
+                        newLayer->SetPen(layerPen);
+                    } 
+                    else {                                                                    // CARGA NOMINAL
+                        newLayer->SetContinuity(true);
+                        wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
+                        newLayer->SetPen(layerPen);
+                    }                          
                 }
-                else {newLayer->SetContinuity(true);}                              //RELES E ICC
-                wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
-                newLayer->SetPen(layerPen);
+                else {                                                                        //RELES E ICC
+                    newLayer->SetContinuity(true);
+                    wxPen layerPen(data->GetColour(), data->GetThick(), data->GetPenType());
+                    newLayer->SetPen(layerPen);
+                    }
                 newLayer->SetDrawOutsideMargins(false);
                 newLayer->ShowName(false);
 
